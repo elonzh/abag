@@ -1,0 +1,9 @@
+shared_folders:
+  - ['~/workspace/', '/vagrant/workspace/']
+forwarded_ports:
+  - [6379, 6379] # redis
+  - [3306, 3306] # mysql
+proxy:
+  http: "http://my-proxy.com"
+  https: "http://my-proxy.com"
+  no_proxy: "localhost,127.0.0.1"
