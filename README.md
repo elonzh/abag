@@ -2,6 +2,13 @@
 
 once build, code every where.
 
+# Features
+
+1. docker, docker-compose support(with default service mysql, redis)
+2. preconfigured zsh
+3. miniconda3
+4. mirrors and proxy  
+
 # Usage
 
 ## Install Vagrant
