@@ -92,7 +92,7 @@ SPACESHIP_USER_SHOW=false
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-    autojump common-aliases docker git git-extras history pip python sudo zsh-autosuggestions
+    common-aliases docker git git-extras history pip python sudo z zsh-autosuggestions
 )
 
 source $ZSH/oh-my-zsh.sh

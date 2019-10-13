@@ -9,7 +9,7 @@ sudo apt update
 
 # oh my zsh
 sudo apt remove docker docker-engine docker.io
-sudo apt install -y zsh autojump git apt-transport-https ca-certificates curl gnupg2 software-properties-common docker-ce docker-compose fonts-powerline
+sudo apt install -y zsh git apt-transport-https ca-certificates curl gnupg2 software-properties-common docker-ce docker-compose fonts-powerline
 
 wget -nv https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O zsh_install.sh
 chmod +x ./zsh_install.sh
