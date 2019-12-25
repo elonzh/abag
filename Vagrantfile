@@ -23,6 +23,10 @@ Vagrant.configure("2") do |config|
   # `vagrant box outdated`. This is not recommended.
   # config.vm.box_check_update = false
 
+  if Vagrant.has_plugin?("vagrant-disksize")
+    config.disksize.size = "30GB"
+  end
+
   # http://tmatilai.github.io/vagrant-proxyconf/
   if Vagrant.has_plugin?("vagrant-proxyconf")
     proxy_conf = USER_CONFIG.fetch("proxy", {})
