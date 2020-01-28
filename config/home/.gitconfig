@@ -1,0 +1,13 @@
+[user]
+	email = i@elonzhou.com
+	name = elonzh
+[credential]
+	helper = store
+[core]
+	editor = code
+	autocrlf = true
+	excludesfile = /home/vagrant/.gitignore_global
+[color]
+	ui = true
+[url "ssh://git@git.17bdc.com/"]
+	insteadOf = https://git.17bdc.com/

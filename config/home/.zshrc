@@ -2,12 +2,12 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH=$HOME/.oh-my-zsh
+export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
+# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="spaceship"
 # https://github.com/denysdovhan/spaceship-prompt/wiki/Presets
 SPACESHIP_PROMPT_ORDER=(
@@ -16,13 +16,10 @@ SPACESHIP_PROMPT_ORDER=(
   dir           # Current directory section
   host          # Hostname section
   git           # Git section (git_branch + git_status)
-  package       # Package version
-  node          # Node.js section
   golang        # Go section
   docker        # Docker section
   venv          # virtualenv section
   pyenv         # Pyenv section
-  kubecontext   # Kubectl context section
   exec_time     # Execution time
   line_sep      # Line break
   vi_mode       # Vi-mode indicator
@@ -30,8 +27,6 @@ SPACESHIP_PROMPT_ORDER=(
   exit_code     # Exit code section
   char          # Prompt character
 )
-SPACESHIP_TIME_SHOW=true
-SPACESHIP_USER_SHOW=false
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -114,9 +109,6 @@ source $ZSH/oh-my-zsh.sh
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
-# ssh
-# export SSH_KEY_PATH="~/.ssh/rsa_id"
-
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
@@ -126,4 +118,8 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-export TERM=xterm-256color
+export GO111MODULE="on"
+export GOPROXY="https://goproxy.cn/,https://goproxy.io,direct"
+export GOPRIVATE="git.17bdc.com"
+
+export PATH="/home/vagrant/miniconda/bin:$PATH"

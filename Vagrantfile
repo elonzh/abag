@@ -15,8 +15,10 @@ Vagrant.configure("2") do |config|
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
   config.vm.box = "ubuntu/bionic64"
+  config.vm.box_url = "https://mirrors.tuna.tsinghua.edu.cn/ubuntu-cloud-images/bionic/current/bionic-server-cloudimg-amd64-vagrant.box"
 
   config.ssh.forward_agent = true
+  # config.ssh.private_key_path = "~/.ssh/id_rsa"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -74,6 +76,17 @@ Vagrant.configure("2") do |config|
     vb.gui = false
     vb.cpus = 2
     vb.memory = "2048"
+
+    # Attach nocloud.iso to the virtual machine
+    vb.customize [
+        "storageattach", :id,
+        "--storagectl", "SCSI",
+        "--port", "1",
+        "--type", "dvddrive",
+        "--medium", USER_CONFIG.fetch("cloud_config_path", "nocloud.iso")
+    ]
+    # Speed up machine startup by using linked clones
+    vb.linked_clone = true
   end
   #
   # View the documentation for the provider you are using for more
@@ -82,7 +95,12 @@ Vagrant.configure("2") do |config|
   # Enable provisioning with a shell script. Additional provisioners such as
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
-  config.vm.provision "shell", run: "once", path: "provision.sh", privileged: false
-  config.vm.provision "shell", run: "once", path: "cleanup.sh", privileged: true
+  config.trigger.before :up do |trigger|
+    trigger.info = "build cidata"
+    trigger.run = {inline: "make nocloud.iso"}
+  end
+  config.vm.provision "shell", run: "once", inline: "cp /var/log/{cloud-init.log,cloud-init-output.log} /vagrant/"
+  config.vm.provision "shell", run: "once", path: "scripts/100-provision.sh", privileged: false
+  config.vm.provision "shell", run: "once", path: "scripts/200-cleanup.sh", privileged: true
   config.vm.provision "shell", run: "always", inline: "cd /vagrant/service/ && docker-compose up -d"
 end

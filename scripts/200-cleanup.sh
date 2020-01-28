@@ -1,5 +1,7 @@
 #!/bin/sh -eux
 
+echo "start clean up by $(whoami) at $(pwd)"
+
 # Delete the massive firmware packages
 rm -rf /lib/firmware/*
 rm -rf /usr/share/doc/linux-firmware/*
