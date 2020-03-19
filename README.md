@@ -28,6 +28,10 @@ cp config.yml.sample config.yml
 vagrant up
 ```
 
+#### mac users
+
+you can install `mkisofs` by `brew install cdrtools`
+
 ## Reference
 
 - [vagrant](https://www.vagrantup.com/docs/)
