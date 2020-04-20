@@ -87,3 +87,7 @@ $RECYCLE.BIN/
 .idea
 .vscode
 config.yml
+
+cloud-init.tar.gz
+*cloud-init-logs*
+

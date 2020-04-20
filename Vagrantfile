@@ -99,7 +99,7 @@ Vagrant.configure("2") do |config|
     trigger.info = "build cidata"
     trigger.run = {inline: "make nocloud.iso"}
   end
-  config.vm.provision "shell", run: "once", inline: "cp /var/log/{cloud-init.log,cloud-init-output.log} /vagrant/"
+  config.vm.provision "shell", run: "once", inline: "cloud-init status --wait 1> /dev/null && cloud-init collect-logs --include-userdata --tarfile /vagrant/cloud-init.tar.gz", privileged: true
   config.vm.provision "shell", run: "once", path: "scripts/100-provision.sh", privileged: false
   config.vm.provision "shell", run: "once", path: "scripts/200-cleanup.sh", privileged: true
   config.vm.provision "shell", run: "always", inline: "cd /vagrant/service/ && docker-compose up -d"
