@@ -1,0 +1,22 @@
+- name: apt proxy config
+  become: yes
+  copy:
+    dest: /etc/apt/apt.conf.d/proxy.conf
+    owner: root
+    group: root
+    content: |-
+      Acquire {
+        HTTP::proxy "{{proxy}}";
+        HTTPS::proxy "{{proxy}}";
+      }
+- name: Install required packages
+  become: yes
+  package:
+    name:
+      - apt-transport-https
+    state: present
+- name: Upgrade apt
+  become: yes
+  apt:
+    upgrade: yes
+    autoremove: yes

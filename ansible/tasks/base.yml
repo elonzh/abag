@@ -1,0 +1,22 @@
+# https://docs.ansible.com/ansible/latest/collections/ansible/builtin
+# https://docs.ansible.com/ansible/latest/user_guide/sample_setup.html
+- hosts: masters
+  become: yes
+  tasks:
+    - name: Install required packages
+      package:
+        name:
+          - build-essential
+          - curl
+          - direnv
+          - fzf
+          - git
+          - git-extras
+          - hugo
+          - libmysqlclient-dev
+          - openssh-server
+          - plantuml
+          - thefuck
+          - tldr
+        state: present
+

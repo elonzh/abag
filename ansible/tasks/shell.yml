@@ -1,0 +1,74 @@
+- name: Disable bell
+  become: true
+  command:
+    cmd: sudo sed -i 's/# set bell-style none/set bell-style none/' /etc/inputrc
+- name: Ensures ~/bin dir exists
+  file:
+    path: ~/bin
+    state: directory
+- name: Ensures ~/.profile.d dir exists
+  file:
+    path: ~/.profile.d
+    state: directory
+- name: Install required packages
+  become: yes
+  package:
+    name:
+      - curl
+      - direnv
+      - fzf
+      - git
+      - git-extras
+      - thefuck
+      - tldr
+    state: present
+- name: Install starship
+  shell:
+    cmd: bash -c "$(curl -fsSL https://starship.rs/install.sh)" "" -y -b ~/bin
+- name: Copy starship config
+  copy:
+    src: config/home/.config/starship.toml
+    dest: ~/.config/
+- name: Install zsh
+  become: yes
+  package:
+    name:
+      - zsh
+    state: present
+- name: Ensures .oh-my-zsh dir absent
+  file:
+    path: ~/.oh-my-zsh
+    state: absent
+- name: Install ohmyzsh
+  shell:
+    cmd: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+- name: Change default shell to zsh
+  shell:
+    cmd: sudo chsh -s "$(command -v zsh)" "$(whoami)"
+- name: Setup proxy env
+  copy:
+    dest: ~/.profile.d/proxy.sh
+    content: |-
+      PROXY="{{proxy}}"
+
+      set_proxy() {
+          export http_proxy=${PROXY}
+          export https_proxy=${PROXY}
+          export HTTP_PROXY=${PROXY}
+          export HTTPS_PROXY=${PROXY}
+      }
+
+      unset_proxy() {
+          unset http_proxy https_proxy HTTP_PROXY HTTPS_PROXY
+      }
+
+      set_proxy
+
+- name: Copy .zshenv
+  copy:
+    src: config/home/.zshenv
+    dest: ~/.zshenv
+- name: Copy .zshrc
+  copy:
+    src: config/home/.zshrc
+    dest: ~/.zshrc

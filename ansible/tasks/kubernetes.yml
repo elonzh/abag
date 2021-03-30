@@ -1,0 +1,25 @@
+- name: Kubernetes apt key
+  become: yes
+  apt_key:
+    url: https://mirrors.aliyun.com/kubernetes/apt/doc/apt-key.gpg
+- name: Kubernetes apt repository
+  become: yes
+  apt_repository:
+    repo: deb https://mirrors.aliyun.com/kubernetes/apt/ kubernetes-xenial main
+    filename: kubernetes
+- name: Install kubectl
+  become: yes
+  package:
+    name: kubectl
+    state: present
+- name: Setup kubernetes env
+  copy:
+    src: config/home/.profile.d/kubernetes.sh
+    dest: ~/.profile.d/kubernetes.sh
+# https://krew.sigs.k8s.io/docs/user-guide/setup/install/
+- name: Install krew
+  script: scripts/install_krew.sh
+# https://helm.sh/docs/intro/install/#from-script
+- name: Install helm
+  shell:
+    cmd: curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash

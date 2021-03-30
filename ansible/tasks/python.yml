@@ -1,0 +1,14 @@
+- name: Install miniconda
+  script: scripts/install_miniconda.sh
+- name: Ensures ~/.pip dir exists
+  file:
+    path: ~/.pip
+    state: directory
+- name: Copy pip.conf
+  copy:
+    src: config/home/.pip/pip.conf
+    dest: ~/.pip/
+- name: Copy .condarc
+  copy:
+    src: config/home/.condarc
+    dest: ~/.condarc

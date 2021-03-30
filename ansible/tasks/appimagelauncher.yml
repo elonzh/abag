@@ -1,0 +1,10 @@
+# https://github.com/TheAssassin/AppImageLauncher/wiki/Install-on-Ubuntu-or-Debian
+- name: Add ppa:appimagelauncher-team/stable
+  become: yes
+  apt_repository:
+    repo: 'ppa:appimagelauncher-team/stable'
+- name: Install appimagelauncher
+  become: yes
+  package:
+    name: appimagelauncher
+    state: present
