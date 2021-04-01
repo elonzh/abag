@@ -1,4 +1,4 @@
-- hosts: all
+- hosts: localhost
   connection: local
   vars:
     proxy: "http://192.168.50.238:7890"

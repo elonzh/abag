@@ -1,4 +1,4 @@
-- hosts: all
+- hosts: localhost
   connection: local
   vars:
     proxy: "http://host.docker.internal:7890"
