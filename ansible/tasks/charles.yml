@@ -1,0 +1,15 @@
+# https://www.charlesproxy.com/documentation/installation/apt-repository/
+- name: charles apt key
+  become: yes
+  apt_key:
+    url: https://www.charlesproxy.com/packages/apt/PublicKey
+- name: charles apt repository
+  become: yes
+  apt_repository:
+    repo: deb https://www.charlesproxy.com/packages/apt/ charles-proxy main
+    filename: charles
+- name: Install charles
+  become: yes
+  package:
+    name: charles
+    state: present

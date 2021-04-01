@@ -1,0 +1,18 @@
+- name: Install git
+  become: yes
+  package:
+    name:
+      - git
+      - git-extras
+    state: present
+- name: git config
+  copy:
+#    src: config/home/.gitconfig
+    dest: ~/.gitconfig
+    content: |-
+      [core]
+              autocrlf = input
+      [http]
+              proxy = {{proxy}}
+      [https]
+              proxy = {{proxy}}

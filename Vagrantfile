@@ -14,8 +14,8 @@ Vagrant.configure("2") do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
-  config.vm.box = "ubuntu/bionic64"
-  config.vm.box_url = "https://mirrors.tuna.tsinghua.edu.cn/ubuntu-cloud-images/bionic/current/bionic-server-cloudimg-amd64-vagrant.box"
+  config.vm.box = "ubuntu/focal64"
+  config.vm.box_url = "https://mirrors.tuna.tsinghua.edu.cn/ubuntu-cloud-images/focal/current/focal-server-cloudimg-amd64-vagrant.box"
 
   config.ssh.forward_agent = true
   # config.ssh.private_key_path = "~/.ssh/id_rsa"
@@ -77,14 +77,6 @@ Vagrant.configure("2") do |config|
     vb.cpus = 2
     vb.memory = "2048"
 
-    # Attach nocloud.iso to the virtual machine
-    vb.customize [
-        "storageattach", :id,
-        "--storagectl", "SCSI",
-        "--port", "1",
-        "--type", "dvddrive",
-        "--medium", USER_CONFIG.fetch("cloud_config_path", "nocloud.iso")
-    ]
     # Speed up machine startup by using linked clones
     vb.linked_clone = true
   end
@@ -95,12 +87,8 @@ Vagrant.configure("2") do |config|
   # Enable provisioning with a shell script. Additional provisioners such as
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
-  config.trigger.before :up do |trigger|
-    trigger.info = "build cidata"
-    trigger.run = {inline: "make nocloud.iso"}
+  config.vm.provision "shell", run: "once", path: "scripts/set_apt_mirror.sh"
+  config.vm.provision "ansible_local", run: "once" do |ansible|
+    ansible.playbook = "ansible/vagrant.yml"
   end
-  config.vm.provision "shell", run: "once", inline: "cloud-init status --wait 1> /dev/null && cloud-init collect-logs --include-userdata --tarfile /vagrant/cloud-init.tar.gz", privileged: true
-  config.vm.provision "shell", run: "once", path: "scripts/100-provision.sh", privileged: false
-  config.vm.provision "shell", run: "once", path: "scripts/200-cleanup.sh", privileged: true
-  config.vm.provision "shell", run: "always", inline: "cd /vagrant/service/ && docker-compose up -d"
 end

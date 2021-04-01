@@ -90,4 +90,4 @@ config.yml
 
 cloud-init.tar.gz
 *cloud-init-logs*
-
+Miniconda3-latest-Linux-x86_64.sh

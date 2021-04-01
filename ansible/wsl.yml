@@ -1,0 +1,15 @@
+- hosts: localhost
+  connection: local
+  vars:
+    proxy: "http://host.docker.internal:7890"
+  environment:
+    http_proxy: "{{proxy}}"
+    https_proxy: "{{proxy}}"
+  tasks:
+    - import_tasks: tasks/package.yml
+    - import_tasks: tasks/git.yml
+    - import_tasks: tasks/shell.yml
+    - import_tasks: tasks/kubernetes.yml
+    - import_tasks: tasks/python.yml
+    - import_tasks: tasks/go.yml
+    - import_tasks: tasks/yarn.yml

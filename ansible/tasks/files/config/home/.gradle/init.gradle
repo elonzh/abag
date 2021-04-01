@@ -1,0 +1,35 @@
+// gradle/wrapper/gradle-wrapper.properties distributionUrl=http://downloads.gradle-dn.com/distributions/<version>.zip
+// gradle/wrapper/gradle-wrapper.properties distributionUrl=https://mirrors.cloud.tencent.com/gradle/<version>.zip
+def mavenMirrors = [
+    'https://repo.maven.org/maven2'        : 'https://maven.aliyun.com/nexus/content/groups/public',
+    'https://repo.maven.apache.org/maven2' : 'https://maven.aliyun.com/nexus/content/groups/public',
+    'https://jcenter.bintray.com'          : 'https://maven.aliyun.com/nexus/content/repositories/jcenter',
+    'https://maven.google.com'             : 'https://maven.aliyun.com/repository/google',
+    'https://plugins.gradle.org/m2'        : 'https://maven.aliyun.com/repository/gradle-plugin',
+    'https://repo.spring.io/libs-milestone': 'https://maven.aliyun.com/repository/spring',
+]
+allprojects {
+    def replaceMavenRepo = { ArtifactRepository repo ->
+        if (repo instanceof MavenArtifactRepository) {
+            def url = repo.getUrl().toString()
+            for (item in mavenMirrors) {
+                if (url.startsWith(item.key)) {
+                    project.logger.lifecycle "Repository ${repo.url} replaced by ${item.value}."
+                    repo.setUrl(item.value)
+                }
+            }
+        }
+    }
+    buildscript {
+        repositories {
+            all { ArtifactRepository repo ->
+                replaceMavenRepo(repo)
+            }
+        }
+    }
+    repositories {
+        all { ArtifactRepository repo ->
+            replaceMavenRepo(repo)
+        }
+    }
+}

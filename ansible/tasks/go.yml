@@ -1,0 +1,14 @@
+# https://github.com/golang/go/wiki/Ubuntu
+- name: Add ppa:longsleep/golang-backports
+  become: yes
+  apt_repository:
+    repo: 'ppa:longsleep/golang-backports'
+- name: Install golang
+  become: yes
+  package:
+    name: golang-go
+    state: present
+- name: Setup go env
+  copy:
+    src: config/home/.profile.d/go.sh
+    dest: ~/.profile.d/go.sh
