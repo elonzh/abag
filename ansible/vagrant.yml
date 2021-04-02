@@ -12,5 +12,5 @@
     - import_tasks: tasks/kubernetes.yml
     - import_tasks: tasks/python.yml
     - import_tasks: tasks/go.yml
-    - import_tasks: tasks/yarn.yml
+    - import_tasks: tasks/web.yml
     - import_tasks: tasks/docker.yml

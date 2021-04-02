@@ -1,0 +1,43 @@
+- name: yarn apt key
+  become: yes
+  apt_key:
+    url: https://dl.yarnpkg.com/debian/pubkey.gpg
+- name: yarn apt repository
+  become: yes
+  apt_repository:
+    repo: deb https://dl.yarnpkg.com/debian/ stable main
+    filename: yarn
+- name: Install yarn
+  become: yes
+  package:
+    name: yarn
+    state: present
+- name: Copy .npmrc
+  copy:
+    src: config/home/.npmrc
+    dest: ~/.npmrc
+- name: Setup web env
+  copy:
+    src: config/home/.profile.d/web.sh
+    dest: ~/.profile.d/web.sh
+- name: Setup display env
+  copy:
+    src: config/home/.profile.d/display.sh
+    dest: ~/.profile.d/display.sh
+# caseywatts/Electron on WSL2.md https://gist.github.com/caseywatts/9700b402b6b51d1d6af9f0b206739770
+- name: Install electron required packages
+  become: yes
+  package:
+    state: present
+    name:
+      - libatk-bridge2.0-0
+      - libatk1.0-0
+      - libgbm-dev
+      - libgconf-2-4
+      - libgdk-pixbuf2.0-0
+      - libgtk-3-0
+      - libnss3-dev
+      - libxss-dev
+      - fonts-noto-cjk
+      - fonts-noto-color-emoji
+      - fonts-roboto
