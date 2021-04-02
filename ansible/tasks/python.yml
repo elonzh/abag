@@ -12,3 +12,11 @@
   copy:
     src: config/home/.condarc
     dest: ~/.condarc
+- name: Install packages for Python development
+  become: yes
+  package:
+    name:
+      - gettext
+      - libmysqlclient-dev
+      - libyaml-dev
+    state: present
