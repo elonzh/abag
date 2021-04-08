@@ -1,5 +1,7 @@
 - import_playbook: vagrant.yml
   vars:
+    proxy_host: "127.0.0.1"
+    proxy_port: "7890"
     proxy: "http://127.0.0.1:7890"
 - hosts: localhost
   connection: local

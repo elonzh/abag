@@ -1,0 +1,12 @@
+- name: Ensures ~/.ssh dir exists
+  file:
+    path: ~/.ssh
+    state: directory
+- name: Ensures ~/.ssh/config.d dir exists
+  file:
+    path: ~/.ssh/config.d
+    state: directory
+- name: basic ssh config
+  copy:
+    dest: ~/.ssh/config
+    src: config/home/.ssh/config

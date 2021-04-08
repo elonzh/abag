@@ -1,12 +1,15 @@
 - hosts: localhost
   connection: local
   vars:
+    proxy_host: "192.168.50.238"
+    proxy_port: "7890"
     proxy: "http://192.168.50.238:7890"
   environment:
     http_proxy: "{{proxy}}"
     https_proxy: "{{proxy}}"
   tasks:
     - import_tasks: tasks/package.yml
+    - import_tasks: tasks/ssh.yml
     - import_tasks: tasks/git.yml
     - import_tasks: tasks/shell.yml
     - import_tasks: tasks/kubernetes.yml

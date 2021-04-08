@@ -4,6 +4,7 @@
     name:
       - git
       - git-extras
+      - socat
     state: present
 - name: git config
   copy:
@@ -16,3 +17,13 @@
               proxy = {{proxy}}
       [https]
               proxy = {{proxy}}
+- name: git ssh proxy config
+  copy:
+    dest: ~/.ssh/config.d/github
+    content: |-
+      Host github.com
+         HostName github.com
+         User git
+         ProxyCommand socat - PROXY:{{proxy_host}}:%h:%p,proxyport={{proxy_port}}
+         # for socks5 proxy
+         # ProxyCommand nc -v -x 127.0.0.1:1080 %h %p
