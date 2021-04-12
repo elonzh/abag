@@ -8,6 +8,6 @@ wget --continue --timestamping -O "${file}" "${url}"
 tar zxvf "${file}" --directory="/tmp"
 KREW="/tmp/krew-${OS}_${ARCH}"
 "$KREW" install krew
-rm -vf krew-*
+rm -vf /tmp/krew-*
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 kubectl krew install view-secret
