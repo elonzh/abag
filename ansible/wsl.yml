@@ -8,10 +8,22 @@
     http_proxy: "{{proxy}}"
     https_proxy: "{{proxy}}"
   tasks:
+    - name: get wsl host
+      shell:
+        cmd: grep nameserver /etc/resolv.conf | cut -d ' ' -f 2
+      register: get_wsl_host
+    - name: set proxy from wsl host
+      set_fact:
+        proxy_host: "{{get_wsl_host.stdout}}"
+        proxy: "http://{{get_wsl_host.stdout}}:{{proxy_port}}"
     - import_tasks: tasks/package.yml
     - import_tasks: tasks/ssh.yml
     - import_tasks: tasks/git.yml
     - import_tasks: tasks/shell.yml
+    - name: setup wsl env
+      copy:
+        src: config/home/.profile.d/wsl.sh
+        dest: ~/.profile.d/wsl.sh
     - import_tasks: tasks/kubernetes.yml
     - import_tasks: tasks/python.yml
     - import_tasks: tasks/go.yml
