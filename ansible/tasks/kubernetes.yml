@@ -19,6 +19,10 @@
 # https://krew.sigs.k8s.io/docs/user-guide/setup/install/
 - name: Install krew
   script: scripts/install_krew.sh
+- name: Install kustomize
+  script: scripts/install_kustomize.sh
+- name: Install stern
+  script: scripts/install_stern.sh
 # https://helm.sh/docs/intro/install/#from-script
 - name: Install helm
   shell:
