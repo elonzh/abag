@@ -11,3 +11,6 @@ if [ -d "$HOME/.profile.d" ]; then
   done
   unset i
 fi
+
+# Turn off all beeps
+unsetopt BEEP
