@@ -8,6 +8,11 @@
     http_proxy: "{{proxy}}"
     https_proxy: "{{proxy}}"
   tasks:
+    - name: copy wsl.conf
+      become: yes
+      copy:
+        src: config/wsl.conf
+        dest: /etc/wsl.conf
     - name: get wsl host
       shell:
         cmd: grep nameserver /etc/resolv.conf | cut -d ' ' -f 2

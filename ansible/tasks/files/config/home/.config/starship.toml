@@ -1,3 +1,4 @@
+# https://starship.rs/config/
 [aws]
 disabled=true
 [crystal]
@@ -21,4 +22,7 @@ disabled=true
 [php]
 disabled=true
 [zip]
+disabled=true
+# git_status is slow for big git repo in windows fs
+[git_status]
 disabled=true
